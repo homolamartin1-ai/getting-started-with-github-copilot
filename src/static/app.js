@@ -4,41 +4,73 @@ document.addEventListener("DOMContentLoaded", () => {
   const signupForm = document.getElementById("signup-form");
   const messageDiv = document.getElementById("message");
 
-  // Function to fetch activities from API
-  async function fetchActivities() {
-    try {
-      const response = await fetch("/activities");
-      const activities = await response.json();
-
-      // Clear loading message
-      activitiesList.innerHTML = "";
-
-      // Populate activities list
-      Object.entries(activities).forEach(([name, details]) => {
-        const activityCard = document.createElement("div");
-        activityCard.className = "activity-card";
-
-        const spotsLeft = details.max_participants - details.participants.length;
-
-        activityCard.innerHTML = `
-          <h4>${name}</h4>
-          <p>${details.description}</p>
-          <p><strong>Schedule:</strong> ${details.schedule}</p>
-          <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
-        `;
-
-        activitiesList.appendChild(activityCard);
-
-        // Add option to select dropdown
-        const option = document.createElement("option");
-        option.value = name;
-        option.textContent = name;
-        activitySelect.appendChild(option);
-      });
-    } catch (error) {
-      activitiesList.innerHTML = "<p>Failed to load activities. Please try again later.</p>";
-      console.error("Error fetching activities:", error);
+  // Static activities data (replacing API fetch)
+  const activities = {
+    "Basketball": {
+      description: "Competitive basketball team for all skill levels.",
+      schedule: "Tuesdays and Thursdays, 4-6 PM",
+      max_participants: 20,
+      participants: [] // Empty for new activity
+    },
+    "Soccer": {
+      description: "School soccer team with training and matches.",
+      schedule: "Mondays and Wednesdays, 3-5 PM",
+      max_participants: 22,
+      participants: []
+    },
+    "Drama Club": {
+      description: "Explore acting, scriptwriting, and stage production.",
+      schedule: "Fridays, 5-7 PM",
+      max_participants: 15,
+      participants: []
+    },
+    "Art Club": {
+      description: "Creative sessions for painting, drawing, and crafts.",
+      schedule: "Wednesdays, 4-6 PM",
+      max_participants: 18,
+      participants: []
+    },
+    "Chess Club": {
+      description: "Strategic games and tournaments for chess enthusiasts.",
+      schedule: "Tuesdays, 5-7 PM",
+      max_participants: 12,
+      participants: []
+    },
+    "Debate Club": {
+      description: "Practice public speaking and argumentation skills.",
+      schedule: "Thursdays, 4-6 PM",
+      max_participants: 16,
+      participants: []
     }
+  };
+
+  // Function to load activities from static data
+  function loadActivities() {
+    // Clear loading message
+    activitiesList.innerHTML = "";
+
+    // Populate activities list
+    Object.entries(activities).forEach(([name, details]) => {
+      const activityCard = document.createElement("div");
+      activityCard.className = "activity-card";
+
+      const spotsLeft = details.max_participants - details.participants.length;
+
+      activityCard.innerHTML = `
+        <h4>${name}</h4>
+        <p>${details.description}</p>
+        <p><strong>Schedule:</strong> ${details.schedule}</p>
+        <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
+      `;
+
+      activitiesList.appendChild(activityCard);
+
+      // Add option to select dropdown
+      const option = document.createElement("option");
+      option.value = name;
+      option.textContent = name;
+      activitySelect.appendChild(option);
+    });
   }
 
   // Handle form submission
@@ -82,5 +114,5 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Initialize app
-  fetchActivities();
+  loadActivities();
 });
