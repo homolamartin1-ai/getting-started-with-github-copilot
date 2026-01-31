@@ -10,37 +10,37 @@ document.addEventListener("DOMContentLoaded", () => {
       description: "Competitive basketball team for all skill levels.",
       schedule: "Tuesdays and Thursdays, 4-6 PM",
       max_participants: 20,
-      participants: [] // Empty for new activity
+      participants: ["alex.johnson@mergington.edu", "jordan.smith@mergington.edu", "casey.williams@mergington.edu", "morgan.brown@mergington.edu"]
     },
     "Soccer": {
       description: "School soccer team with training and matches.",
       schedule: "Mondays and Wednesdays, 3-5 PM",
       max_participants: 22,
-      participants: []
+      participants: ["sam.davis@mergington.edu", "taylor.martinez@mergington.edu", "riley.garcia@mergington.edu"]
     },
     "Drama Club": {
       description: "Explore acting, scriptwriting, and stage production.",
       schedule: "Fridays, 5-7 PM",
       max_participants: 15,
-      participants: []
+      participants: ["emma.anderson@mergington.edu", "noah.thompson@mergington.edu", "olivia.jackson@mergington.edu", "liam.white@mergington.edu", "sophia.harris@mergington.edu"]
     },
     "Art Club": {
       description: "Creative sessions for painting, drawing, and crafts.",
       schedule: "Wednesdays, 4-6 PM",
       max_participants: 18,
-      participants: []
+      participants: ["ava.martin@mergington.edu", "ethan.lee@mergington.edu", "isabella.perez@mergington.edu"]
     },
     "Chess Club": {
       description: "Strategic games and tournaments for chess enthusiasts.",
       schedule: "Tuesdays, 5-7 PM",
       max_participants: 12,
-      participants: []
+      participants: ["mason.clark@mergington.edu", "amelia.rodriguez@mergington.edu", "lucas.lewis@mergington.edu", "mia.walker@mergington.edu", "benjamin.hall@mergington.edu", "charlotte.allen@mergington.edu"]
     },
     "Debate Club": {
       description: "Practice public speaking and argumentation skills.",
       schedule: "Thursdays, 4-6 PM",
       max_participants: 16,
-      participants: []
+      participants: ["henry.young@mergington.edu", "harper.king@mergington.edu", "alexander.wright@mergington.edu"]
     }
   };
 
@@ -55,12 +55,21 @@ document.addEventListener("DOMContentLoaded", () => {
       activityCard.className = "activity-card";
 
       const spotsLeft = details.max_participants - details.participants.length;
+      
+      // Build participants list HTML
+      const participantsList = details.participants.length > 0
+        ? `<ul>${details.participants.map(p => `<li>${p}</li>`).join("")}</ul>`
+        : "<p><em>No participants yet</em></p>";
 
       activityCard.innerHTML = `
         <h4>${name}</h4>
         <p>${details.description}</p>
         <p><strong>Schedule:</strong> ${details.schedule}</p>
         <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
+        <div class="participants-section">
+          <strong>Current Participants:</strong>
+          ${participantsList}
+        </div>
       `;
 
       activitiesList.appendChild(activityCard);
